@@ -11,7 +11,7 @@ using CoffeeMugWebAPI.Data;
 
 namespace CoffeeMugWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -45,7 +45,7 @@ namespace CoffeeMugWebAPI.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id:guid}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
             if (id != product.Id)
@@ -82,7 +82,7 @@ namespace CoffeeMugWebAPI.Controllers
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
         // DELETE: api/Products/5
@@ -97,7 +97,7 @@ namespace CoffeeMugWebAPI.Controllers
 
             _context.Product.Remove(product);
             await _context.SaveChangesAsync();
-
+           
             return NoContent();
         }
 
