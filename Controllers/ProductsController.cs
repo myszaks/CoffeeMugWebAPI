@@ -82,7 +82,7 @@ namespace CoffeeMugWebAPI.Controllers
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id });
         }
 
         // DELETE: api/Products/5
