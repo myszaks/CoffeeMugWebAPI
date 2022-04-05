@@ -47,7 +47,7 @@ namespace CoffeeMugWebAPI.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
-            if (id != product.Id)
+            if (id != product.Id || product.Description.Length > 200)
             {
                 return BadRequest();
             }
@@ -60,7 +60,8 @@ namespace CoffeeMugWebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                var ProductExists = _context.Product.Any(e => e.Id == id);
+                if (!ProductExists)
                 {
                     return NotFound();
                 }
@@ -77,6 +78,8 @@ namespace CoffeeMugWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            if (product.Name == null || product.Name.Length > 100 || product.Description.Length > 200 || product.Price == null ) return BadRequest();
+
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
 
@@ -97,11 +100,6 @@ namespace CoffeeMugWebAPI.Controllers
             await _context.SaveChangesAsync();
            
             return NoContent();
-        }
-
-        private bool ProductExists(Guid id)
-        {
-            return _context.Product.Any(e => e.Id == id);
         }
     }
 }
