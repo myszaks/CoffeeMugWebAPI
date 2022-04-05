@@ -44,7 +44,6 @@ namespace CoffeeMugWebAPI.Controllers
         }
 
         // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
@@ -75,7 +74,6 @@ namespace CoffeeMugWebAPI.Controllers
         }
 
         // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
