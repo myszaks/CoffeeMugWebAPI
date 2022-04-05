@@ -78,7 +78,7 @@ namespace CoffeeMugWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            if (product.Name == null || product.Name.Length > 100 || product.Description.Length > 200 || product.Price == null ) return BadRequest();
+            if (string.IsNullOrWhiteSpace(product.Name) || product.Name.Length > 100 || product.Description.Length > 200 || product.Price == null ) return BadRequest();
 
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
