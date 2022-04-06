@@ -29,8 +29,8 @@ namespace CoffeeMugWebAPI.Controllers
             return await _context.Product.ToListAsync();
         }
 
-        // GET: api/Products/5
-        [HttpGet("{id}")]
+        // GET: api/Products/da6be7be-57e5-4b9a-fc75-08da16cb3122
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<Product>> GetProduct(Guid id)
         {
             var product = await _context.Product.FindAsync(id);
@@ -43,11 +43,11 @@ namespace CoffeeMugWebAPI.Controllers
             return product;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Products/da6be7be-57e5-4b9a-fc75-08da16cb3122
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> PutProduct(Guid id, Product product)
         {
-            if (id != product.Id || product.Description.Length > 200)
+            if (id != product.Id || (product.Description?.Length ?? 0) > 200)
             {
                 return BadRequest();
             }
@@ -78,7 +78,7 @@ namespace CoffeeMugWebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
-            if (string.IsNullOrWhiteSpace(product.Name) || product.Name.Length > 100 || product.Description.Length > 200 || product.Price == null ) return BadRequest();
+            if (string.IsNullOrWhiteSpace(product.Name) || product.Name.Length > 100 || product.Description.Length > 200 || product.Price == null) return BadRequest();
 
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
@@ -86,8 +86,8 @@ namespace CoffeeMugWebAPI.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id });
         }
 
-        // DELETE: api/Products/5
-        [HttpDelete("{id}")]
+        // DELETE: api/Products/da6be7be-57e5-4b9a-fc75-08da16cb3122
+        [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteProduct(Guid id)
         {
             var product = await _context.Product.FindAsync(id);
